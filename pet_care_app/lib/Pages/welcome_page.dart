@@ -25,7 +25,9 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DoctorRegistration()),
+                    builder: (context) => const DoctorRegistration(
+                        key: Key('doctor_registration')),
+                  ),
                 );
               },
               child: const Text(
