@@ -14,14 +14,25 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome to PetCare'),
+        title: Text(
+          'Welcome to Pet Care',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
+            MaterialButton(
+              elevation: 5,
+              color: Colors.green,
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+              //minWidth: MediaQuery.of(context).size.width,
+              onPressed: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -30,27 +41,62 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 );
               },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: const Text(
-                'Doctor',
+                "Doctor",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.green,
+                  fontSize: 20,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+
+            // ElevatedButton(
+            // onPressed: () {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => const DoctorRegistration(
+            //           key: Key('doctor_registration')),
+            //     ),
+            //   );
+            //   },
+            //   child: const Text(
+            //     'Doctor',
+            //     style: TextStyle(
+            //       color: Colors.green,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
+            MaterialButton(
+              elevation: 5,
+              color: Colors.green,
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+              //minWidth: MediaQuery.of(context).size.width,
+              onPressed: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PatientsRegistration()),
+                    builder: (context) => const PatientsRegistration(
+                        key: Key('patients_registration')),
+                  ),
                 );
               },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: const Text(
-                'Patient',
+                "Patient",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.green,
+                  fontSize: 20,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
