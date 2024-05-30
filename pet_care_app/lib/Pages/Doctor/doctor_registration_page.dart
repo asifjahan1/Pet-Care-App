@@ -12,13 +12,16 @@ class DoctorRegistration extends StatefulWidget {
 
 class _DoctorRegistrationState extends State<DoctorRegistration> {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // List of allowed email addresses for doctors
   List<String> allowedDoctorEmails = [
-    'doctor1@example.com',
-    'doctor2@example.com',
+    'tas.tutul@gmail.com',
+    'tas.tutul786@gmail.com',
+    'tas.tutulvet@gmail.com',
+    'asifjahan307@gmail.com',
     // Add more allowed email addresses as needed
   ];
 
@@ -31,11 +34,11 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
 
   void _registerDoctor() async {
     try {
-      // Create Firebase user with email and a dummy password
+      // Create Firebase user with email and password
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
-        password: 'dummyPassword',
+        password: passwordController.text,
       );
 
       // Add doctor details to Firestore
@@ -57,8 +60,9 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
 
   @override
   void dispose() {
-    // Dispose of the email controller when the widget is disposed
+    // Dispose of the email and password controllers when the widget is disposed
     emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -77,6 +81,12 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
               controller: emailController,
               decoration: InputDecoration(labelText: 'Email'),
               validator: validateEmail,
+            ),
+            SizedBox(height: 20),
+            TextFormField(
+              controller: passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true, // Hide password text
             ),
             SizedBox(height: 20),
             ElevatedButton(
