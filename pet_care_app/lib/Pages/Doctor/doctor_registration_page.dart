@@ -41,7 +41,13 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Registration Error'),
+          title: const Text(
+            'Registration Error!',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: Text(message),
           actions: <Widget>[
             TextButton(
