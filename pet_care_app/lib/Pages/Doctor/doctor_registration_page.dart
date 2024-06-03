@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pet_care_app/Authentication/auth_service.dart';
 import 'package:pet_care_app/Pages/Doctor/doctor_login.dart';
-import 'package:pet_care_app/Pages/welcome_page.dart';
 
 class DoctorRegistration extends StatefulWidget {
-  const DoctorRegistration({Key? key}) : super(key: key);
+  const DoctorRegistration({super.key});
 
   @override
   State<DoctorRegistration> createState() => _DoctorRegistrationState();

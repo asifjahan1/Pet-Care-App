@@ -1,30 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pet_care_app/Pages/Patients/patient_profile.dart';
-
-class RegistrationData {
-  String ownerName;
-  String patientName;
-  String address;
-  int age;
-  String sex;
-  String mobileNumber;
-  String bodyColor;
-  String species;
-  String date;
-
-  RegistrationData({
-    required this.ownerName,
-    required this.patientName,
-    required this.address,
-    required this.age,
-    required this.sex,
-    required this.mobileNumber,
-    required this.bodyColor,
-    required this.species,
-    required this.date,
-  });
-}
+import 'package:pet_care_app/Pages/Patients/patient_login.dart';
+import 'package:pet_care_app/Pages/Patients/registered_patients.dart';
 
 class PatientsRegistration extends StatefulWidget {
   const PatientsRegistration({super.key});
@@ -47,7 +24,6 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
   @override
   void initState() {
     super.initState();
-    // Set the current date to the date text field
     dateController.text = _getCurrentDate();
   }
 
@@ -58,13 +34,34 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
     return formattedDate;
   }
 
-  void _navigateToPatientProfile() {
-    // Create RegistrationData object with user inputs
-    RegistrationData data = RegistrationData(
+  void _registerPatient() {
+    if (ownerNameController.text.isEmpty ||
+        patientNameController.text.isEmpty ||
+        addressController.text.isEmpty ||
+        ageController.text.isEmpty ||
+        sexController.text.isEmpty ||
+        mobileNumberController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Please fill all required fields.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    RegistrationData newPatient = RegistrationData(
       ownerName: ownerNameController.text,
-      patientName: patientNameController.text,
+      petName: patientNameController.text,
       address: addressController.text,
-      age: int.tryParse(ageController.text) ?? 0,
+      age: ageController.text,
       sex: sexController.text,
       mobileNumber: mobileNumberController.text,
       bodyColor: bodyColorController.text,
@@ -72,10 +69,11 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
       date: dateController.text,
     );
 
-    // Pass the data to the profile page and navigate
+    RegisteredPatients().addPatient(newPatient);
+
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PatientProfile(data)),
+      MaterialPageRoute(builder: (context) => const PetLogin()),
     );
   }
 
@@ -111,7 +109,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: ownerNameController,
                 decoration: InputDecoration(
-                  hintText: 'Owner Name',
+                  hintText: 'Owner Name *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -121,7 +119,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: patientNameController,
                 decoration: InputDecoration(
-                  hintText: 'Patient Name',
+                  hintText: 'Patient Name *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -131,7 +129,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: addressController,
                 decoration: InputDecoration(
-                  hintText: 'Address',
+                  hintText: 'Address *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -141,7 +139,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: ageController,
                 decoration: InputDecoration(
-                  hintText: 'Age',
+                  hintText: 'Age *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -151,7 +149,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: sexController,
                 decoration: InputDecoration(
-                  hintText: 'Sex',
+                  hintText: 'Sex *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -161,7 +159,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: mobileNumberController,
                 decoration: InputDecoration(
-                  hintText: 'Mobile Number',
+                  hintText: 'Mobile Number *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -190,21 +188,21 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               const SizedBox(height: 10),
               TextField(
                 controller: dateController,
-                enabled: false, // Make the field read-only
                 decoration: InputDecoration(
-                  labelText: 'Date',
+                  hintText: 'Date',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                readOnly: true,
               ),
               const SizedBox(height: 16),
               Center(
                 child: MaterialButton(
-                  onPressed: _navigateToPatientProfile,
+                  onPressed: _registerPatient,
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: const Text('Register Patient'),
+                  child: const Text('Register Pet'),
                 ),
               ),
             ],
@@ -213,4 +211,28 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
       ),
     );
   }
+}
+
+class RegistrationData {
+  String ownerName;
+  String petName;
+  String address;
+  String age;
+  String sex;
+  String mobileNumber;
+  String bodyColor;
+  String species;
+  String date;
+
+  RegistrationData({
+    required this.ownerName,
+    required this.petName,
+    required this.address,
+    required this.age,
+    required this.sex,
+    required this.mobileNumber,
+    required this.bodyColor,
+    required this.species,
+    required this.date,
+  });
 }

@@ -1,27 +1,26 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:pet_care_app/Pages/Doctor/Splash_screen.dart';
-import 'package:pet_care_app/Pages/Patients/Patient_Splash_screen.dart';
+import 'package:pet_care_app/Pages/Doctor/doctor_login.dart';
+import 'package:pet_care_app/Pages/Doctor/doctor_registration_page.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class DoctorLogReg extends StatelessWidget {
+  const DoctorLogReg({super.key});
 
-  @override
-  State<WelcomePage> createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Dhaka Pet Care',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.green,
+            size: 30,
           ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
-        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -36,9 +35,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DoctorLogReg(
-                        // key: Key('doctor_registration'),
-                        ),
+                    builder: (context) => const DoctorRegistration(),
                   ),
                 );
               },
@@ -46,7 +43,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Text(
-                "Doctor",
+                "Doctor Registration",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -65,7 +62,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PetLogReg(),
+                    builder: (context) => const DoctorPage(),
                   ),
                 );
               },
@@ -73,7 +70,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Text(
-                "Patient",
+                "Doctor Login",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,

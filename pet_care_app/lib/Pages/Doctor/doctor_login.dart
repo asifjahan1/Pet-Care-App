@@ -26,7 +26,7 @@ class _DoctorPageState extends State<DoctorPage> {
         return AlertDialog(
           title: const Text(
             "Error",
-            textAlign: TextAlign.center, // Center the title text
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.bold,
@@ -47,7 +47,6 @@ class _DoctorPageState extends State<DoctorPage> {
   }
 
   void handleLogin(BuildContext context) {
-    // Navigate to the desired page after successful login
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const WelcomePage()),
@@ -69,11 +68,6 @@ class _DoctorPageState extends State<DoctorPage> {
           ),
           onPressed: () {
             Navigator.of(context).pop();
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => const WelcomePage(),
-            //   ),
-            // );
           },
         ),
         title: const Text(
@@ -159,7 +153,8 @@ class _DoctorPageState extends State<DoctorPage> {
                     if (email.isEmpty || password.isEmpty) {
                       _showErrorDialog("Email or Password cannot be empty!");
                     } else {
-                      bool success = await authService.login(email, password);
+                      bool success =
+                          await authService.login(context, email, password);
 
                       if (success) {
                         handleLogin(context);
@@ -207,7 +202,6 @@ class _DoctorPageState extends State<DoctorPage> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                // Navigator.of(context).pop();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
