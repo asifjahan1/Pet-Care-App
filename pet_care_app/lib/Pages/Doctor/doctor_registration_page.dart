@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pet_care_app/Authentication/auth_service.dart';
 import 'package:pet_care_app/Pages/Doctor/doctor_login.dart';
+import 'package:pet_care_app/Pages/welcome_page.dart';
 
 class DoctorRegistration extends StatefulWidget {
   const DoctorRegistration({Key? key}) : super(key: key);
@@ -134,6 +135,22 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.green,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const WelcomePage(),
+            //   ),
+            // );
+          },
+        ),
         title: const Text(
           'Doctor Registration',
           style: TextStyle(

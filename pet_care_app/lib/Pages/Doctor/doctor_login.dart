@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_care_app/Authentication/auth_service.dart';
 import 'package:pet_care_app/Pages/Doctor/Doctor_profile.dart';
@@ -23,7 +24,14 @@ class _DoctorPageState extends State<DoctorPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Error"),
+          title: const Text(
+            "Error",
+            textAlign: TextAlign.center, // Center the title text
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: Text(message),
           actions: [
             TextButton(
@@ -61,6 +69,11 @@ class _DoctorPageState extends State<DoctorPage> {
           ),
           onPressed: () {
             Navigator.of(context).pop();
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => const WelcomePage(),
+            //   ),
+            // );
           },
         ),
         title: const Text(
@@ -74,7 +87,7 @@ class _DoctorPageState extends State<DoctorPage> {
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 400),
+          constraints: const BoxConstraints(maxWidth: 400),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
@@ -144,7 +157,7 @@ class _DoctorPageState extends State<DoctorPage> {
                     String password = passwordController.text;
 
                     if (email.isEmpty || password.isEmpty) {
-                      _showErrorDialog("Email or Password cannot be empty.");
+                      _showErrorDialog("Email or Password cannot be empty!");
                     } else {
                       bool success = await authService.login(email, password);
 
@@ -179,19 +192,30 @@ class _DoctorPageState extends State<DoctorPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
+                      text: TextSpan(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                         ),
                         children: [
                           TextSpan(
                             text: 'Create new account!',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.lightGreen,
                               fontSize: 18.5,
                               fontWeight: FontWeight.bold,
                             ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                // Navigator.of(context).pop();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DoctorRegistration(),
+                                  ),
+                                );
+                              },
                           ),
                         ],
                       ),
