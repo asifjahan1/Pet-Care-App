@@ -20,13 +20,11 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // List of allowed email addresses for doctors
   final List<String> allowedDoctorEmails = [
     'tas.tutul@gmail.com',
     'tas.tutul786@gmail.com',
     'tas.tutulvet@gmail.com',
     'asifjahan307@gmail.com',
-    // Add more allowed email addresses as needed
   ];
 
   String? validateEmail(String? value) {
@@ -51,7 +49,7 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -77,20 +75,16 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
     }
 
     try {
-      // Create Firebase user with email and password
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Add doctor details to Firestore
       await _firestore.collection('doctors').doc(userCredential.user!.uid).set({
         'email': email,
-        // Add more doctor details here if needed
       });
 
-      // Show success message and navigate to doctor page after successful registration
       _showSuccessDialog();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -109,16 +103,16 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Registration Successful'),
-          content: Text('Your registration was successful.'),
+          title: const Text('Registration Successful'),
+          content: const Text('Your registration was successful.'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => DoctorPage()),
+                  MaterialPageRoute(builder: (context) => const DoctorPage()),
                 );
               },
             ),
@@ -152,117 +146,107 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 50),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    // Email field
-                    TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Doctor Email',
-                        prefixIcon: const Icon(Icons.email, color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // Password field
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock, color: Colors.grey),
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                          child: Icon(
-                            _obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        hintText: 'Please Enter Password',
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-                    MaterialButton(
-                      elevation: 5,
-                      color: Colors.green,
-                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      minWidth: MediaQuery.of(context).size.width,
-                      onPressed: () async {
-                        _registerDoctor();
-                      },
-                      shape: RoundedRectangleBorder(
+      body: Center(
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //const SizedBox(height: 50),
+                  TextFormField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Doctor Email',
+                      prefixIcon: const Icon(Icons.email, color: Colors.grey),
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        "SignUp",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: passwordController,
+                    obscureText: _obscureText,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock, color: Colors.grey),
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        child: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.grey,
                         ),
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintText: 'Please Enter Password',
                     ),
-                    const SizedBox(height: 30),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Already Have an Account? ',
-                            style: TextStyle(
-                              color: Colors.deepPurple,
-                              fontSize: 15,
-                              //fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Login!',
-                            style: const TextStyle(
-                              color: Colors.deepPurple,
-                              fontSize: 18.5,
-                              fontWeight: FontWeight.bold,
-                              //decoration: TextDecoration.underline,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const DoctorPage(),
-                                  ),
-                                );
-                              },
-                          ),
-                        ],
+                  ),
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    elevation: 5,
+                    color: Colors.green,
+                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    minWidth: MediaQuery.of(context).size.width,
+                    onPressed: _registerDoctor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text(
+                      "SignUp",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 30),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'Already Have an Account? ',
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontSize: 15,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Login!',
+                          style: const TextStyle(
+                            color: Colors.green,
+                            fontSize: 18.5,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DoctorPage(),
+                                ),
+                              );
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
