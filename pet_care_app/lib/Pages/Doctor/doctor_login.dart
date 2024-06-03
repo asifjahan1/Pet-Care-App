@@ -47,9 +47,8 @@ class _DoctorPageState extends State<DoctorPage> {
   }
 
   void handleLogin(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const WelcomePage()),
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const DoctorProfile()),
     );
   }
 
