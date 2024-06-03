@@ -100,6 +100,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
