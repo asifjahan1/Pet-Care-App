@@ -139,7 +139,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: ageController,
                 decoration: InputDecoration(
-                  hintText: 'Age *',
+                  hintText: 'Age (years or months) *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
