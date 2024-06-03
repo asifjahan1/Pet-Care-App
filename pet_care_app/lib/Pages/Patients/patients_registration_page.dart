@@ -119,7 +119,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: patientNameController,
                 decoration: InputDecoration(
-                  hintText: 'Patient Name *',
+                  hintText: 'Pet Name *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
