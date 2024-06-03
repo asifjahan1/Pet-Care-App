@@ -18,6 +18,10 @@ class RegisteredPatients {
   }
 
   RegistrationData? getPatientByMobileNumber(String mobileNumber) {
+    if (_patients.isEmpty) {
+      return null;
+    }
+
     try {
       return _patients.firstWhere(
         (patient) => patient.mobileNumber == mobileNumber,
