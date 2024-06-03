@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_care_app/Authentication/auth_service.dart';
+import 'package:pet_care_app/Pages/Doctor/Doctor_profile.dart';
 import 'package:pet_care_app/Pages/Doctor/doctor_registration_page.dart';
 import 'package:pet_care_app/Pages/Doctor/forget_password.dart';
 import 'package:pet_care_app/Pages/welcome_page.dart';
@@ -27,12 +28,11 @@ class _DoctorPageState extends State<DoctorPage> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: Colors.black,
+            color: Colors.green,
             size: 30,
           ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const WelcomePage()));
+            Navigator.of(context).pop();
           },
         ),
         title: const Text(
@@ -83,17 +83,21 @@ class _DoctorPageState extends State<DoctorPage> {
                   hintText: 'Please Enter Password',
                 ),
               ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ForgetPassword()));
                     },
                     child: const Text(
                       "Forget Password?",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.redAccent,
+                      ),
                     ),
                   ),
                 ],
@@ -117,7 +121,7 @@ class _DoctorPageState extends State<DoctorPage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DoctorPage()),
+                            builder: (context) => const DoctorProfile()),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
