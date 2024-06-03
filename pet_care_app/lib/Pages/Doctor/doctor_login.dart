@@ -4,7 +4,6 @@ import 'package:pet_care_app/Authentication/auth_service.dart';
 import 'package:pet_care_app/Pages/Doctor/Doctor_profile.dart';
 import 'package:pet_care_app/Pages/Doctor/doctor_registration_page.dart';
 import 'package:pet_care_app/Pages/Doctor/forget_password.dart';
-import 'package:pet_care_app/Pages/welcome_page.dart';
 
 class DoctorPage extends StatefulWidget {
   const DoctorPage({super.key});
