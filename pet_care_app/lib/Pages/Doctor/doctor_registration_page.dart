@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +8,7 @@ import 'package:pet_care_app/Authentication/auth_service.dart';
 import 'package:pet_care_app/Pages/Doctor/doctor_login.dart';
 
 class DoctorRegistration extends StatefulWidget {
-  const DoctorRegistration({Key? key}) : super(key: key);
+  const DoctorRegistration({super.key});
 
   @override
   _DoctorRegistrationState createState() => _DoctorRegistrationState();
@@ -25,7 +27,7 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
     'tas.tutul786@gmail.com',
     'tas.tutulvet@gmail.com',
     'asifjahan307@gmail.com',
-    '3332asif1@gmail.com',
+    // '3332asif1@gmail.com',
   ];
 
   // String? validateEmail(String? value) {
