@@ -50,7 +50,15 @@ class AuthService {
       if (email.isEmpty || password.isEmpty) {
         // Show a Snackbar message if email or password is empty
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please provide both email and password.')),
+          const SnackBar(
+              content: Text(
+            'Please provide both email and password.',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 20,
+              backgroundColor: Colors.black,
+            ),
+          )),
         );
         return false; // Login failed
       }
