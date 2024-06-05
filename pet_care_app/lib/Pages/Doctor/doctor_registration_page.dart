@@ -6,10 +6,10 @@ import 'package:pet_care_app/Authentication/auth_service.dart';
 import 'package:pet_care_app/Pages/Doctor/doctor_login.dart';
 
 class DoctorRegistration extends StatefulWidget {
-  const DoctorRegistration({super.key});
+  const DoctorRegistration({Key? key}) : super(key: key);
 
   @override
-  State<DoctorRegistration> createState() => _DoctorRegistrationState();
+  _DoctorRegistrationState createState() => _DoctorRegistrationState();
 }
 
 class _DoctorRegistrationState extends State<DoctorRegistration> {
@@ -25,7 +25,15 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
     'tas.tutul786@gmail.com',
     'tas.tutulvet@gmail.com',
     'asifjahan307@gmail.com',
+    '3332asif1@gmail.com',
   ];
+
+  // String? validateEmail(String? value) {
+  //   if (value == null || !allowedDoctorEmails.contains(value)) {
+  //     return 'Only authorized doctors can register.';
+  //   }
+  //   return null;
+  // }
 
   String? validateEmail(String? value) {
     if (value == null || !allowedDoctorEmails.contains(value)) {
@@ -34,91 +42,87 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
     return null;
   }
 
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Registration Error!',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _registerDoctor() async {
     final String email = emailController.text;
     final String password = passwordController.text;
 
     if (validateEmail(email) != null) {
-      _showErrorDialog('Only authorized doctors can register.');
+      _showSnackbar('Only authorized doctors can register.');
       return;
     }
 
     if (email.isEmpty || password.isEmpty) {
-      _showErrorDialog('Please enter email and password');
+      _showSnackbar('Please enter email and password');
       return;
     }
 
     try {
+      // Check if the email is already registered
+      final isEmailRegistered = await _isEmailRegistered(email);
+      if (isEmailRegistered) {
+        _showSnackbar(
+            'This email is already registered. Please log in instead.');
+        return;
+      }
+
+      // Attempt to create user in Firebase Auth
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
+      // After successful creation, store the user details in Firestore
       await _firestore.collection('doctors').doc(userCredential.user!.uid).set({
         'email': email,
       });
 
-      _showSuccessDialog();
+      _showSnackbar('Registration successful');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const DoctorPage()),
+      );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        _showErrorDialog(
-            'The email address is already in use by another account.');
-      } else {
-        _showErrorDialog('Error registering doctor: ${e.message}');
-      }
+      _showSnackbar('Error registering doctor: ${e.message}');
     } catch (e) {
-      _showErrorDialog('Error registering doctor: $e');
+      _showSnackbar('Error registering doctor: $e');
     }
   }
 
-  void _showSuccessDialog() {
+  Future<bool> _isEmailRegistered(String email) async {
+    try {
+      // Check if the email exists in Firebase Auth
+      await _auth.fetchSignInMethodsForEmail(email);
+      return true; // Email is registered
+    } on FirebaseAuthException catch (_) {
+      return false; // Email is not registered
+    }
+  }
+
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
+  void _showDialog(String title, String message) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Registration Successful'),
-          content: const Text('Your registration was successful.'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DoctorPage()),
-                );
-              },
-            ),
-          ],
-        );
-      },
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -142,12 +146,6 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
           ),
           onPressed: () {
             Navigator.of(context).pop();
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const WelcomePage(),
-            //   ),
-            // );
           },
         ),
         title: const Text(
@@ -171,7 +169,6 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //const SizedBox(height: 50),
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(

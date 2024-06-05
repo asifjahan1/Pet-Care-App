@@ -50,6 +50,16 @@ class PatientProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.green,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         title: const Text(
           'Patient Profile',
           style: TextStyle(
@@ -65,9 +75,13 @@ class PatientProfile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Owner Name: ${data.ownerName}'),
-              const SizedBox(height: 8),
-              Text('Patient Name: ${data.petName}'),
+              Row(
+                children: [
+                  Text('Owner Name: ${data.ownerName}'),
+                  const SizedBox(width: 10),
+                  Text('Patient Name: ${data.petName}'),
+                ],
+              ),
               const SizedBox(height: 8),
               Text('Address: ${data.address}'),
               const SizedBox(height: 8),
