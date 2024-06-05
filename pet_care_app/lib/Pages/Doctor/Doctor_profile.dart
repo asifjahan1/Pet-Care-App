@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pet_care_app/Pages/Doctor/Splash_screen.dart';
 
 class DoctorProfile extends StatefulWidget {
@@ -20,26 +22,38 @@ class _DoctorProfileState extends State<DoctorProfile> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    _loadImage();
   }
 
-  Future<void> _getImageFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      }
-    });
+  Future<void> _loadImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final imagePath = prefs.getString('profile_image');
+    if (imagePath != null && imagePath.isNotEmpty) {
+      setState(() {
+        _image = File(imagePath);
+      });
+    }
   }
 
-  Future<void> _getImageFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+  Future<void> _saveImage(File image) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final imagePath = '${directory.path}/profile_image.png';
+    final savedImage = await image.copy(imagePath);
 
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      }
-    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile_image', savedImage.path);
+  }
+
+  Future<void> _getImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      final imageFile = File(pickedFile.path);
+      setState(() {
+        _image = imageFile;
+      });
+      await _saveImage(imageFile);
+    }
   }
 
   void _showOptionsDialog(BuildContext context) {
@@ -68,7 +82,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
-                  _getImageFromCamera();
+                  _getImage(ImageSource.camera);
                 },
               ),
               ListTile(
@@ -85,7 +99,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
-                  _getImageFromGallery();
+                  _getImage(ImageSource.gallery);
                 },
               ),
             ],
@@ -166,8 +180,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
         items: [
           BottomNavigationBarItem(
             icon: IconTheme(
-              data: const IconThemeData(
-                  size: 30), // Increase the size of the icon
+              data: const IconThemeData(size: 30),
               child: _selectedIndex == 0
                   ? const SizedBox.shrink()
                   : const Icon(Icons.person),
@@ -176,8 +189,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
           ),
           BottomNavigationBarItem(
             icon: IconTheme(
-              data: const IconThemeData(
-                  size: 30), // Increase the size of the icon
+              data: const IconThemeData(size: 30),
               child: _selectedIndex == 1
                   ? const SizedBox.shrink()
                   : const Icon(Icons.notifications),
@@ -188,8 +200,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.green,
         onTap: _onItemTapped,
-        selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.bold), // Apply bold style to selected label
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
