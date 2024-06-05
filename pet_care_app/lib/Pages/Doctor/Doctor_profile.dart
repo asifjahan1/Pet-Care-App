@@ -160,11 +160,11 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   onTap: () => _showOptionsDialog(context),
                   child: CircleAvatar(
                     radius: 40,
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.grey.withOpacity(0.3),
                     backgroundImage: _image != null ? FileImage(_image!) : null,
                     child: _image == null
                         ? const Icon(Icons.person,
-                            size: 50, color: Colors.white)
+                            size: 70, color: Colors.white)
                         : null,
                   ),
                 ),
@@ -183,7 +183,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
               data: const IconThemeData(size: 30),
               child: _selectedIndex == 0
                   ? const SizedBox.shrink()
-                  : const Icon(Icons.person),
+                  : const Icon(
+                      Icons.person,
+                      color: Colors.black54,
+                    ),
             ),
             label: _selectedIndex == 0 ? 'Profile' : '',
           ),
@@ -192,7 +195,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
               data: const IconThemeData(size: 30),
               child: _selectedIndex == 1
                   ? const SizedBox.shrink()
-                  : const Icon(Icons.notifications),
+                  : const Icon(
+                      Icons.notifications,
+                      color: Colors.black54,
+                    ),
             ),
             label: _selectedIndex == 1 ? 'Notification' : '',
           ),
