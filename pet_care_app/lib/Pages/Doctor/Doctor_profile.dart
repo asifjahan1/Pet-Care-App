@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, file_names, deprecated_member_use
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pet_care_app/Pages/Doctor/Splash_screen.dart';
 
 class DoctorProfile extends StatefulWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
+  const DoctorProfile({super.key});
 
   @override
   State<DoctorProfile> createState() => _DoctorProfileState();
@@ -109,6 +111,29 @@ class _DoctorProfileState extends State<DoctorProfile> {
     );
   }
 
+  Future<bool> _showExitConfirmationDialog(BuildContext context) async {
+    return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Exit'),
+              content: const Text('Are you sure you want to exit?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('No'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('Yes'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -118,95 +143,109 @@ class _DoctorProfileState extends State<DoctorProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.green,
-            size: 30,
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldExit = await _showExitConfirmationDialog(context);
+        if (shouldExit) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const DoctorLogReg(),
+            ),
+          );
+        }
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () async {
+              final shouldExit = await _showExitConfirmationDialog(context);
+              if (shouldExit) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DoctorLogReg(),
+                  ),
+                );
+              }
+            },
           ),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const DoctorLogReg(),
-              ),
-            );
+          title: Text(
+            _selectedIndex == 0 ? 'Profile' : 'Notification',
+            style: const TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          centerTitle: true,
+        ),
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
           },
-        ),
-        title: Text(
-          _selectedIndex == 0 ? 'Profile' : 'Notification',
-          style: const TextStyle(
-            color: Colors.green,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        children: [
-          Column(
-            children: [
-              const SizedBox(height: 10),
-              Center(
-                child: GestureDetector(
-                  onTap: () => _showOptionsDialog(context),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.grey.withOpacity(0.3),
-                    backgroundImage: _image != null ? FileImage(_image!) : null,
-                    child: _image == null
-                        ? const Icon(Icons.person,
-                            size: 70, color: Colors.white)
-                        : null,
+          children: [
+            Column(
+              children: [
+                const SizedBox(height: 10),
+                Center(
+                  child: GestureDetector(
+                    onTap: () => _showOptionsDialog(context),
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.grey,
+                      backgroundImage:
+                          _image != null ? FileImage(_image!) : null,
+                      child: _image == null
+                          ? const Icon(Icons.person,
+                              size: 50, color: Colors.white)
+                          : null,
+                    ),
                   ),
                 ),
+              ],
+            ),
+            const Center(
+              child: Text(
+                'Notification Page',
+                style: TextStyle(color: Colors.grey),
               ),
-            ],
-          ),
-          const Center(
-            child: Text('Notification Page'),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: IconTheme(
-              data: const IconThemeData(size: 30),
-              child: _selectedIndex == 0
-                  ? const SizedBox.shrink()
-                  : const Icon(
-                      Icons.person,
-                      color: Colors.black54,
-                    ),
             ),
-            label: _selectedIndex == 0 ? 'Profile' : '',
-          ),
-          BottomNavigationBarItem(
-            icon: IconTheme(
-              data: const IconThemeData(size: 30),
-              child: _selectedIndex == 1
-                  ? const SizedBox.shrink()
-                  : const Icon(
-                      Icons.notifications,
-                      color: Colors.black54,
-                    ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: IconTheme(
+                data: const IconThemeData(size: 30),
+                child: _selectedIndex == 0
+                    ? const SizedBox.shrink()
+                    : const Icon(Icons.person, color: Colors.black54),
+              ),
+              label: _selectedIndex == 0 ? 'Profile' : '',
             ),
-            label: _selectedIndex == 1 ? 'Notification' : '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.green,
-        onTap: _onItemTapped,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            BottomNavigationBarItem(
+              icon: IconTheme(
+                data: const IconThemeData(size: 30),
+                child: _selectedIndex == 1
+                    ? const SizedBox.shrink()
+                    : const Icon(Icons.notifications, color: Colors.black54),
+              ),
+              label: _selectedIndex == 1 ? 'Notification' : '',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.green,
+          onTap: _onItemTapped,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
