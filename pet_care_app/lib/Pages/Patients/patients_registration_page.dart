@@ -16,6 +16,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController sexController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
   final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController bodyColorController = TextEditingController();
   final TextEditingController speciesController = TextEditingController();
@@ -40,6 +41,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
         addressController.text.isEmpty ||
         ageController.text.isEmpty ||
         sexController.text.isEmpty ||
+        weightController.text.isEmpty ||
         mobileNumberController.text.isEmpty) {
       showDialog(
         context: context,
@@ -63,6 +65,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
       address: addressController.text,
       age: ageController.text,
       sex: sexController.text,
+      weight: weightController.text,
       mobileNumber: mobileNumberController.text,
       bodyColor: bodyColorController.text,
       species: speciesController.text,
@@ -115,11 +118,21 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
                   ),
                 ),
               ),
+              // const SizedBox(height: 10),
+              // TextField(
+              //   controller: patientNameController,
+              //   decoration: InputDecoration(
+              //     hintText: 'Pet Name *',
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 10),
               TextField(
-                controller: patientNameController,
+                controller: addressController,
                 decoration: InputDecoration(
-                  hintText: 'Pet Name *',
+                  hintText: 'Address *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -127,9 +140,9 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               ),
               const SizedBox(height: 10),
               TextField(
-                controller: addressController,
+                controller: patientNameController,
                 decoration: InputDecoration(
-                  hintText: 'Address *',
+                  hintText: 'Pet Name *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -145,11 +158,12 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 10),
               TextField(
                 controller: sexController,
                 decoration: InputDecoration(
-                  hintText: 'Sex *',
+                  hintText: 'Weight (KG) *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -219,6 +233,7 @@ class RegistrationData {
   String address;
   String age;
   String sex;
+  String weight;
   String mobileNumber;
   String bodyColor;
   String species;
@@ -229,6 +244,7 @@ class RegistrationData {
     required this.petName,
     required this.address,
     required this.age,
+    required this.weight,
     required this.sex,
     required this.mobileNumber,
     required this.bodyColor,
