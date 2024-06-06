@@ -19,15 +19,21 @@ class _DoctorProfileState extends State<DoctorProfile> {
   final ImagePicker _picker = ImagePicker();
   int _selectedIndex = 0;
   late PageController _pageController;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _sexController = TextEditingController();
+  final TextEditingController _specialtyController =
+      TextEditingController(); // New field
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    _loadImage();
+    _loadProfile();
   }
 
-  Future<void> _loadImage() async {
+  Future<void> _loadProfile() async {
     final prefs = await SharedPreferences.getInstance();
     final imagePath = prefs.getString('profile_image');
     if (imagePath != null && imagePath.isNotEmpty) {
@@ -35,6 +41,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
         _image = File(imagePath);
       });
     }
+    _nameController.text = prefs.getString('doctor_name') ?? '';
+    _mobileController.text = prefs.getString('doctor_mobile') ?? '';
+    _addressController.text = prefs.getString('doctor_address') ?? '';
+    _sexController.text = prefs.getString('doctor_sex') ?? '';
+    _specialtyController.text =
+        prefs.getString('doctor_specialty') ?? ''; // Load new field
   }
 
   Future<void> _saveImage(File image) async {
@@ -56,6 +68,40 @@ class _DoctorProfileState extends State<DoctorProfile> {
       });
       await _saveImage(imageFile);
     }
+  }
+
+  Future<void> _showSuccessDialog() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        Future.delayed(const Duration(milliseconds: 1200), () {
+          Navigator.of(context).pop(true);
+        });
+        return const AlertDialog(
+          title: Text(
+            'Success!',
+            style: TextStyle(
+                color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            'Profile Updated successfully.',
+            style: TextStyle(color: Colors.black54),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _saveProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('doctor_name', _nameController.text);
+    await prefs.setString('doctor_mobile', _mobileController.text);
+    await prefs.setString('doctor_address', _addressController.text);
+    await prefs.setString('doctor_sex', _sexController.text);
+    await prefs.setString('doctor_specialty', _specialtyController.text);
+
+    await _showSuccessDialog();
   }
 
   void _showOptionsDialog(BuildContext context) {
@@ -116,16 +162,23 @@ class _DoctorProfileState extends State<DoctorProfile> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Exit'),
+              title: const Text('Exit?'),
               content: const Text('Are you sure you want to exit?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('No'),
+                  child: const Text(
+                    'No',
+                    style: TextStyle(color: Colors.green),
+                  ),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('Yes'),
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             );
@@ -157,23 +210,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.white,
-              size: 30,
-            ),
-            onPressed: () async {
-              final shouldExit = await _showExitConfirmationDialog(context);
-              if (shouldExit) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const DoctorLogReg(),
-                  ),
-                );
-              }
-            },
-          ),
           title: Text(
             _selectedIndex == 0 ? 'Profile' : 'Notification',
             style: const TextStyle(
@@ -192,25 +228,86 @@ class _DoctorProfileState extends State<DoctorProfile> {
             });
           },
           children: [
-            Column(
-              children: [
-                const SizedBox(height: 10),
-                Center(
-                  child: GestureDetector(
-                    onTap: () => _showOptionsDialog(context),
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.grey,
-                      backgroundImage:
-                          _image != null ? FileImage(_image!) : null,
-                      child: _image == null
-                          ? const Icon(Icons.person,
-                              size: 50, color: Colors.white)
-                          : null,
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () => _showOptionsDialog(context),
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey,
+                        backgroundImage:
+                            _image != null ? FileImage(_image!) : null,
+                        child: _image == null
+                            ? const Icon(Icons.person,
+                                size: 50, color: Colors.white)
+                            : null,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: _nameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Name',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: _mobileController,
+                          decoration: const InputDecoration(
+                            labelText: 'Mobile Number',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: _addressController,
+                          decoration: const InputDecoration(
+                            labelText: 'Address',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: _sexController,
+                          decoration: const InputDecoration(
+                            labelText: 'Sex',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: _specialtyController,
+                          decoration: const InputDecoration(
+                            labelText: 'Specialty',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MaterialButton(
+                            padding: const EdgeInsets.all(10),
+                            onPressed: _saveProfile,
+                            color: Colors.green,
+                            child: const Text(
+                              'Save',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             const Center(
               child: Text(
