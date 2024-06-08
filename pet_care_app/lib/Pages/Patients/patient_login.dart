@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pet_care_app/Pages/Patients/patient_profile.dart';
 import 'package:pet_care_app/Pages/Patients/patients_registration_page.dart';
 import 'package:pet_care_app/Pages/Patients/registered_patients.dart';
-import 'patient_profile.dart';
 
 class PetLogin extends StatefulWidget {
   const PetLogin({super.key});
@@ -15,6 +15,23 @@ class _PetLoginState extends State<PetLogin> {
 
   void _login() {
     String mobileNumber = mobileNumberController.text;
+
+    if (mobileNumber.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Please enter your mobile number.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
 
     RegistrationData? patient =
         RegisteredPatients().getPatientByMobileNumber(mobileNumber);
@@ -77,7 +94,7 @@ class _PetLoginState extends State<PetLogin> {
               TextField(
                 controller: mobileNumberController,
                 decoration: InputDecoration(
-                  hintText: 'Registered Mobile Number',
+                  hintText: 'Registered Mobile Number *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

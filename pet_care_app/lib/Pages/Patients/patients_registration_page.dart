@@ -4,7 +4,7 @@ import 'package:pet_care_app/Pages/Patients/patient_login.dart';
 import 'package:pet_care_app/Pages/Patients/registered_patients.dart';
 
 class PatientsRegistration extends StatefulWidget {
-  const PatientsRegistration({super.key});
+  const PatientsRegistration({Key? key}) : super(key: key);
 
   @override
   State<PatientsRegistration> createState() => _PatientsRegistrationState();
@@ -29,25 +29,18 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
   }
 
   String _getCurrentDate() {
-    // Get the current date and format it as desired
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('MMMM dd, yyyy').format(now);
     return formattedDate;
   }
 
   void _registerPatient() {
-    if (ownerNameController.text.isEmpty ||
-        patientNameController.text.isEmpty ||
-        addressController.text.isEmpty ||
-        ageController.text.isEmpty ||
-        sexController.text.isEmpty ||
-        weightController.text.isEmpty ||
-        mobileNumberController.text.isEmpty) {
+    if (mobileNumberController.text.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Error'),
-          content: const Text('Please fill all required fields.'),
+          content: const Text('Please fill the Mobile Number field.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -112,27 +105,7 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: ownerNameController,
                 decoration: InputDecoration(
-                  hintText: 'Owner Name *',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              // const SizedBox(height: 10),
-              // TextField(
-              //   controller: patientNameController,
-              //   decoration: InputDecoration(
-              //     hintText: 'Pet Name *',
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: addressController,
-                decoration: InputDecoration(
-                  hintText: 'Address *',
+                  hintText: 'Owner Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -142,7 +115,17 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: patientNameController,
                 decoration: InputDecoration(
-                  hintText: 'Pet Name *',
+                  hintText: 'Pet Name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: addressController,
+                decoration: InputDecoration(
+                  hintText: 'Address',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -152,18 +135,27 @@ class _PatientsRegistrationState extends State<PatientsRegistration> {
               TextField(
                 controller: ageController,
                 decoration: InputDecoration(
-                  hintText: 'Age (years or months) *',
+                  hintText: 'Age (years or months)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
               TextField(
                 controller: sexController,
                 decoration: InputDecoration(
-                  hintText: 'Weight (KG) *',
+                  hintText: 'Sex',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: weightController,
+                decoration: InputDecoration(
+                  hintText: 'Weight (KG)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -244,8 +236,8 @@ class RegistrationData {
     required this.petName,
     required this.address,
     required this.age,
-    required this.weight,
     required this.sex,
+    required this.weight,
     required this.mobileNumber,
     required this.bodyColor,
     required this.species,

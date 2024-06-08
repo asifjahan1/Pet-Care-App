@@ -221,7 +221,11 @@ class _DoctorProfileState extends State<DoctorProfile> {
             },
           ),
           title: Text(
-            _selectedIndex == 0 ? 'Profile' : 'Notification',
+            _selectedIndex == 0
+                ? 'Profile'
+                : _selectedIndex == 1
+                    ? 'Notification'
+                    : 'Prescription',
             style: const TextStyle(
               color: Colors.green,
               fontWeight: FontWeight.bold,
@@ -325,6 +329,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 style: TextStyle(color: Colors.grey),
               ),
             ),
+            const Center(
+              child: Text(
+                'Prescription Page',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -346,6 +356,15 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     : const Icon(Icons.notifications, color: Colors.black54),
               ),
               label: _selectedIndex == 1 ? 'Notification' : '',
+            ),
+            BottomNavigationBarItem(
+              icon: IconTheme(
+                data: const IconThemeData(size: 30),
+                child: _selectedIndex == 2
+                    ? const SizedBox.shrink()
+                    : const Icon(Icons.assignment, color: Colors.black54),
+              ),
+              label: _selectedIndex == 2 ? 'Prescription' : '',
             ),
           ],
           currentIndex: _selectedIndex,
