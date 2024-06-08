@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_care_app/Pages/welcome_page.dart';
+import 'package:pet_care_app/Pages/prescription_page.dart';
+// import 'package:pet_care_app/Pages/welcome_page.dart';
 import 'package:pet_care_app/firebase_options.dart';
 
 Future<void> main() async {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const WelcomePage(),
+      home: const Prescription(),
     );
   }
 }
