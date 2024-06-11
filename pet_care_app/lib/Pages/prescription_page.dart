@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
@@ -22,20 +23,61 @@ class _PrescriptionState extends State<Prescription> {
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _sexController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _ccFormController = TextEditingController();
-  final TextEditingController _chFormController = TextEditingController();
+  final TextEditingController _alopeciaController = TextEditingController();
+  final TextEditingController _anorexiaController = TextEditingController();
+  final TextEditingController _commonColdController = TextEditingController();
+  final TextEditingController _constipationController = TextEditingController();
+  final TextEditingController _dehydrationController = TextEditingController();
+  final TextEditingController _diarrheaController = TextEditingController();
+  final TextEditingController _feverController = TextEditingController();
+  final TextEditingController _pneumoniaController = TextEditingController();
+  final TextEditingController _vomitingController = TextEditingController();
+  final TextEditingController _othersController = TextEditingController();
+  final TextEditingController _dewormingController = TextEditingController();
+  final TextEditingController _rabiesVaccineController =
+      TextEditingController();
+  final TextEditingController _fluVaccineController = TextEditingController();
+  final TextEditingController _dhppDogController = TextEditingController();
   final TextEditingController _testFormController = TextEditingController();
   final TextEditingController _adviceController = TextEditingController();
   final TextEditingController _prescriptionController = TextEditingController();
 
   final String _date = DateFormat.yMMMMd().format(DateTime.now());
-
   Uint8List? _imageData;
 
   @override
   void initState() {
     super.initState();
     _loadImage();
+  }
+
+  @override
+  void dispose() {
+    _ownerNameController.dispose();
+    _addressController.dispose();
+    _mobileController.dispose();
+    _petNameController.dispose();
+    _ageController.dispose();
+    _sexController.dispose();
+    _weightController.dispose();
+    _alopeciaController.dispose();
+    _anorexiaController.dispose();
+    _commonColdController.dispose();
+    _constipationController.dispose();
+    _dehydrationController.dispose();
+    _diarrheaController.dispose();
+    _feverController.dispose();
+    _pneumoniaController.dispose();
+    _vomitingController.dispose();
+    _othersController.dispose();
+    _dewormingController.dispose();
+    _rabiesVaccineController.dispose();
+    _fluVaccineController.dispose();
+    _dhppDogController.dispose();
+    _testFormController.dispose();
+    _adviceController.dispose();
+    _prescriptionController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadImage() async {
@@ -74,8 +116,27 @@ class _PrescriptionState extends State<Prescription> {
       final age = _formatAge(_ageController.text);
       final sex = _sexController.text;
       final weight = _formatWeight(_weightController.text);
-      final ccForm = _ccFormController.text;
-      final chForm = _chFormController.text;
+
+      final ccForm = [
+        'Alopecia: ${_alopeciaController.text}',
+        'Anorexia: ${_anorexiaController.text}',
+        'Common Cold: ${_commonColdController.text}',
+        'Constipation: ${_constipationController.text}',
+        'Dehydration: ${_dehydrationController.text}',
+        'Diarrhea: ${_diarrheaController.text}',
+        'Fever: ${_feverController.text}',
+        'Pneumonia: ${_pneumoniaController.text}',
+        'Vomiting: ${_vomitingController.text}',
+        'Others: ${_othersController.text}',
+      ];
+
+      final chForm = [
+        'Deworming: ${_dewormingController.text}',
+        'Rabies Vaccine: ${_rabiesVaccineController.text}',
+        'Flu Vaccine: ${_fluVaccineController.text}',
+        'DHPPL(DOG): ${_dhppDogController.text}',
+      ];
+
       final testForm = _testFormController.text;
       final advice = _adviceController.text;
       final prescription = _prescriptionController.text;
@@ -147,51 +208,23 @@ class _PrescriptionState extends State<Prescription> {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Expanded(
-                      flex: 2,
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Row(
-                            children: [
-                              pw.Expanded(child: pw.Text('C/C')),
-                              pw.SizedBox(width: 10),
-                              pw.Expanded(child: pw.Text(ccForm)),
-                            ],
-                          ),
-                          pw.SizedBox(height: 10),
-                          pw.Row(
-                            children: [
-                              pw.Expanded(child: pw.Text('C/H')),
-                              pw.SizedBox(width: 10),
-                              pw.Expanded(child: pw.Text(chForm)),
-                            ],
-                          ),
-                          pw.SizedBox(height: 10),
-                          pw.Row(
-                            children: [
-                              pw.Expanded(child: pw.Text('Test')),
-                              pw.SizedBox(width: 10),
-                              pw.Expanded(child: pw.Text(testForm)),
-                            ],
-                          ),
-                          pw.SizedBox(height: 10),
-                          pw.Row(
-                            children: [
-                              pw.Expanded(child: pw.Text('Advice')),
-                              pw.SizedBox(width: 10),
-                              pw.Expanded(child: pw.Text(advice)),
-                            ],
-                          ),
+                          pw.Text('C/C',
+                              style: pw.TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: pw.FontWeight.bold)),
+                          for (var cc in ccForm) pw.Text(cc),
                         ],
                       ),
                     ),
                     pw.VerticalDivider(
                         width: 10, thickness: 1, color: PdfColors.black),
                     pw.Expanded(
-                      flex: 4,
                       child: pw.Container(
                         height: 200,
-                        color: PdfColors.grey200,
+                        color: PdfColors.grey50,
                         child: pw.Padding(
                           padding: const pw.EdgeInsets.all(8.0),
                           child: pw.Text(prescription),
@@ -200,9 +233,25 @@ class _PrescriptionState extends State<Prescription> {
                     ),
                   ],
                 ),
-                pw.SizedBox(height: 10),
-                pw.Divider(),
-                pw.SizedBox(height: 10),
+                pw.SizedBox(height: 20),
+                pw.Row(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Expanded(
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.Text('C/H',
+                              style: pw.TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: pw.FontWeight.bold)),
+                          for (var ch in chForm) pw.Text(ch),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                pw.SizedBox(height: 20),
                 pw.Text(
                   'Do not give any medicine to your pet without doctor advice. Must bring the previous prescription with you at the time of next visit. Animals eyes speak great language.',
                 ),
@@ -243,23 +292,60 @@ class _PrescriptionState extends State<Prescription> {
                   Expanded(
                     child: TextField(
                       controller: _ownerNameController,
-                      decoration:
-                          const InputDecoration(labelText: 'Owner Name'),
+                      decoration: InputDecoration(
+                        labelText: 'Owner Name',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _addressController,
-                      decoration: const InputDecoration(labelText: 'Address'),
+                      decoration: InputDecoration(
+                        labelText: 'Address',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _mobileController,
-                      decoration:
-                          const InputDecoration(labelText: 'Mobile Number'),
+                      decoration: InputDecoration(
+                        labelText: 'Mobile No',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -270,88 +356,550 @@ class _PrescriptionState extends State<Prescription> {
                   Expanded(
                     child: TextField(
                       controller: _petNameController,
-                      decoration: const InputDecoration(labelText: 'Pet Name'),
+                      decoration: InputDecoration(
+                        labelText: 'Patient Name',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _ageController,
-                      decoration: const InputDecoration(labelText: 'Age'),
+                      decoration: InputDecoration(
+                        labelText: 'Age',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _sexController,
-                      decoration: const InputDecoration(labelText: 'Sex'),
+                      decoration: InputDecoration(
+                        labelText: 'Sex',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _weightController,
-                      decoration: const InputDecoration(labelText: 'Weight'),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: 'Date',
-                  hintText: _date,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: _ccFormController,
-                          decoration: const InputDecoration(labelText: 'C/C'),
+                      decoration: InputDecoration(
+                        labelText: 'Weight',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                        const SizedBox(height: 10),
-                        TextField(
-                          controller: _chFormController,
-                          decoration: const InputDecoration(labelText: 'C/H '),
-                        ),
-                        const SizedBox(height: 10),
-                        TextField(
-                          controller: _testFormController,
-                          decoration: const InputDecoration(labelText: 'Test'),
-                        ),
-                        const SizedBox(height: 10),
-                        TextField(
-                          controller: _adviceController,
-                          decoration:
-                              const InputDecoration(labelText: 'Advice'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                      width: 10, thickness: 1, color: Colors.black),
-                  Expanded(
-                    child: Container(
-                      height: 500,
-                      color: Colors.grey[200],
-                      child: TextField(
-                        controller: _prescriptionController,
-                        maxLines: null,
-                        expands: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Prescription Medicines',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 12.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[400]!),
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: Colors.grey[200],
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    Text(
+                      _date,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'C/C',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _alopeciaController,
+                    decoration: InputDecoration(
+                      labelText: 'Alopecia',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _anorexiaController,
+                    decoration: InputDecoration(
+                      labelText: 'Anorexia',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _commonColdController,
+                    decoration: InputDecoration(
+                      labelText: 'Common Cold',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _constipationController,
+                    decoration: InputDecoration(
+                      labelText: 'Constipation',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _dehydrationController,
+                    decoration: InputDecoration(
+                      labelText: 'Dehydration',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _diarrheaController,
+                    decoration: InputDecoration(
+                      labelText: 'Diarrhea',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _feverController,
+                    decoration: InputDecoration(
+                      labelText: 'Fever',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _pneumoniaController,
+                    decoration: InputDecoration(
+                      labelText: 'Pneumonia',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _vomitingController,
+                    decoration: InputDecoration(
+                      labelText: 'Vomiting',
+                      hintText: 'Symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _othersController,
+                    decoration: InputDecoration(
+                      labelText: 'Others',
+                      hintText: 'Other symptoms',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'C/H',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _dewormingController,
+                    decoration: InputDecoration(
+                      labelText: 'Deworming',
+                      hintText: '',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _rabiesVaccineController,
+                    decoration: InputDecoration(
+                      labelText: 'Rabies Vaccine',
+                      hintText: '',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _fluVaccineController,
+                    decoration: InputDecoration(
+                      labelText: 'Flu Vaccine',
+                      hintText: '',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _dhppDogController,
+                    decoration: InputDecoration(
+                      labelText: 'DHPP(DOG)',
+                      hintText: '',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _alopeciaController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Container(
+                height: 250,
+                color: Colors.grey[200],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _prescriptionController,
+                    maxLines: null,
+                    expands: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Prescription Medicines',
+                      border: InputBorder.none,
+                      // OutlineInputBorder(
+                      //   borderRadius: BorderRadius.circular(12.0),
+                      //   borderSide: const BorderSide(color: Colors.grey),
+                      // ),
+                      contentPadding: EdgeInsets.all(8.0),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               const Text(
