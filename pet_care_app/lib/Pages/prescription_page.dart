@@ -244,10 +244,11 @@ class _PrescriptionState extends State<Prescription> {
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Text('C/H',
-                              style: pw.TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: pw.FontWeight.bold)),
+                          pw.Text(
+                            'C/H',
+                            style: pw.TextStyle(
+                                fontSize: 18, fontWeight: pw.FontWeight.bold),
+                          ),
                           for (var ch in chForm) pw.Text(ch),
                         ],
                       ),
