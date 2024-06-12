@@ -24,6 +24,10 @@ class _PrescriptionState extends State<Prescription> {
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _sexController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _breedController = TextEditingController();
+  final TextEditingController _speciesController = TextEditingController();
+  final TextEditingController _colorController = TextEditingController();
+  final TextEditingController _tempController = TextEditingController();
   final TextEditingController _alopeciaController = TextEditingController();
   final TextEditingController _anorexiaController = TextEditingController();
   final TextEditingController _commonColdController = TextEditingController();
@@ -63,6 +67,10 @@ class _PrescriptionState extends State<Prescription> {
     _petNameController.dispose();
     _ageController.dispose();
     _sexController.dispose();
+    _breedController.dispose();
+    _speciesController.dispose();
+    _colorController.dispose();
+    _tempController.dispose();
     _weightController.dispose();
     _alopeciaController.dispose();
     _anorexiaController.dispose();
@@ -100,7 +108,7 @@ class _PrescriptionState extends State<Prescription> {
   String _formatAge(String age) {
     final number = double.tryParse(age);
     if (number == null) return age;
-    return '$age years';
+    return '$age Years';
   }
 
   String _formatWeight(String weight) {
@@ -124,7 +132,12 @@ class _PrescriptionState extends State<Prescription> {
       final petName = _petNameController.text;
       final age = _formatAge(_ageController.text);
       final sex = _sexController.text;
+
       final weight = _formatWeight(_weightController.text);
+      final breed = _breedController.text;
+      final species = _speciesController.text;
+      final color = _colorController.text;
+      final temp = _tempController.text;
 
       final ccForm = [
         'Alopecia: ${_alopeciaController.text}',
@@ -187,14 +200,14 @@ class _PrescriptionState extends State<Prescription> {
                         style: pw.TextStyle(font: ttf),
                       ),
                     ),
-                    pw.SizedBox(width: 10),
+                    pw.SizedBox(width: 5),
                     pw.Expanded(
                       child: pw.Text(
                         'Address: $address',
                         style: pw.TextStyle(font: ttf),
                       ),
                     ),
-                    pw.SizedBox(width: 10),
+                    pw.SizedBox(width: 5),
                     pw.Expanded(
                       child: pw.Text(
                         'Mobile Number: $mobileNumber',
@@ -203,30 +216,30 @@ class _PrescriptionState extends State<Prescription> {
                     ),
                   ],
                 ),
-                pw.SizedBox(height: 20),
+                pw.SizedBox(height: 10),
                 pw.Row(
                   children: [
                     pw.Expanded(
                       child: pw.Text(
-                        'Pet Name: $petName',
+                        'Patient Name: $petName',
                         style: pw.TextStyle(font: ttf),
                       ),
                     ),
-                    pw.SizedBox(width: 10),
+                    pw.SizedBox(width: 8),
                     pw.Expanded(
                       child: pw.Text(
                         'Age: $age',
                         style: pw.TextStyle(font: ttf),
                       ),
                     ),
-                    pw.SizedBox(width: 10),
+                    pw.SizedBox(width: 8),
                     pw.Expanded(
                       child: pw.Text(
                         'Sex: $sex',
                         style: pw.TextStyle(font: ttf),
                       ),
                     ),
-                    pw.SizedBox(width: 10),
+                    pw.SizedBox(width: 8),
                     pw.Expanded(
                       child: pw.Text(
                         'Weight: $weight',
@@ -235,12 +248,53 @@ class _PrescriptionState extends State<Prescription> {
                     ),
                   ],
                 ),
-                pw.SizedBox(height: 20),
+                pw.SizedBox(height: 10),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Breed: $breed',
+                        style: pw.TextStyle(font: ttf),
+                      ),
+                    ),
+                    pw.SizedBox(width: 8),
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Species: $species',
+                        style: pw.TextStyle(font: ttf),
+                      ),
+                    ),
+                    pw.SizedBox(width: 8),
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Color: $color',
+                        style: pw.TextStyle(font: ttf),
+                      ),
+                    ),
+                    pw.SizedBox(width: 8),
+                    pw.Expanded(
+                      child: pw.Row(
+                        // mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        children: [
+                          pw.Text(
+                            'Temp: $temp',
+                            style: pw.TextStyle(font: ttf),
+                          ),
+                          pw.Text(
+                            '°F',
+                            style: pw.TextStyle(font: ttf),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                pw.SizedBox(height: 10),
                 pw.Text(
                   'Date: $_date',
                   style: pw.TextStyle(font: ttf),
                 ),
-                pw.SizedBox(height: 10),
+                pw.SizedBox(height: 8),
                 pw.Divider(),
                 pw.Row(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -322,7 +376,7 @@ class _PrescriptionState extends State<Prescription> {
                 ),
                 pw.SizedBox(height: 20),
                 pw.Text(
-                  'Please do not give any medicine to your pet without doctor advice. It is imperative to bring the previous prescription during your next visit. Animals’ eyes speek great language.',
+                  'Please do not give any medicine to your pet without doctor advice. It is imperative to bring the previous prescription during your next visit. Animals’ eyes speak great language.',
                   style: pw.TextStyle(
                     font: ttf,
                     color: PdfColors.red,
@@ -494,6 +548,94 @@ class _PrescriptionState extends State<Prescription> {
                       controller: _weightController,
                       decoration: InputDecoration(
                         labelText: 'Weight',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _breedController,
+                      decoration: InputDecoration(
+                        labelText: 'Breed',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _speciesController,
+                      decoration: InputDecoration(
+                        labelText: 'Species',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _colorController,
+                      decoration: InputDecoration(
+                        labelText: 'Color',
+                        labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _tempController,
+                      onChanged: (value) {
+                        // No need to convert temperature, just append '*F' to the value
+                        _tempController.text = '';
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Temp',
                         labelStyle: TextStyle(
                           color: Colors.grey[600],
                           fontWeight: FontWeight.bold,
