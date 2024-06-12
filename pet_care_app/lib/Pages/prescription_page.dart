@@ -113,6 +113,11 @@ class _PrescriptionState extends State<Prescription> {
     try {
       final pdf = pw.Document();
 
+      // Load the Times New Roman font
+      final fontData =
+          await rootBundle.load('assets/fonts/times new roman.ttf');
+      final ttf = pw.Font.ttf(fontData);
+
       final ownerName = _ownerNameController.text;
       final address = _addressController.text;
       final mobileNumber = _mobileController.text;
@@ -177,15 +182,24 @@ class _PrescriptionState extends State<Prescription> {
                 pw.Row(
                   children: [
                     pw.Expanded(
-                      child: pw.Text('Owner Name: $ownerName'),
+                      child: pw.Text(
+                        'Owner Name: $ownerName',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                     pw.SizedBox(width: 10),
                     pw.Expanded(
-                      child: pw.Text('Address: $address'),
+                      child: pw.Text(
+                        'Address: $address',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                     pw.SizedBox(width: 10),
                     pw.Expanded(
-                      child: pw.Text('Mobile Number: $mobileNumber'),
+                      child: pw.Text(
+                        'Mobile Number: $mobileNumber',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                   ],
                 ),
@@ -193,24 +207,39 @@ class _PrescriptionState extends State<Prescription> {
                 pw.Row(
                   children: [
                     pw.Expanded(
-                      child: pw.Text('Pet Name: $petName'),
+                      child: pw.Text(
+                        'Pet Name: $petName',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                     pw.SizedBox(width: 10),
                     pw.Expanded(
-                      child: pw.Text('Age: $age'),
+                      child: pw.Text(
+                        'Age: $age',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                     pw.SizedBox(width: 10),
                     pw.Expanded(
-                      child: pw.Text('Sex: $sex'),
+                      child: pw.Text(
+                        'Sex: $sex',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                     pw.SizedBox(width: 10),
                     pw.Expanded(
-                      child: pw.Text('Weight: $weight'),
+                      child: pw.Text(
+                        'Weight: $weight',
+                        style: pw.TextStyle(font: ttf),
+                      ),
                     ),
                   ],
                 ),
                 pw.SizedBox(height: 20),
-                pw.Text('Date: $_date'),
+                pw.Text(
+                  'Date: $_date',
+                  style: pw.TextStyle(font: ttf),
+                ),
                 pw.SizedBox(height: 10),
                 pw.Divider(),
                 pw.Row(
@@ -224,61 +253,80 @@ class _PrescriptionState extends State<Prescription> {
                           pw.Text(
                             'C/C',
                             style: pw.TextStyle(
-                              fontSize: 14,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                                font: ttf,
+                                fontSize: 18,
+                                fontWeight: pw.FontWeight.bold),
                           ),
-                          for (var cc in ccForm) pw.Text(cc),
-                          pw.SizedBox(height: 10),
+                          for (var cc in ccForm)
+                            pw.Text(
+                              cc,
+                              style: pw.TextStyle(font: ttf),
+                            ),
+                          pw.SizedBox(height: 15),
                           pw.Text(
                             'C/H',
                             style: pw.TextStyle(
-                              fontSize: 14,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                                font: ttf,
+                                fontSize: 18,
+                                fontWeight: pw.FontWeight.bold),
                           ),
-                          for (var ch in chForm) pw.Text(ch),
-                          pw.SizedBox(height: 10),
+                          for (var ch in chForm)
+                            pw.Text(
+                              ch,
+                              style: pw.TextStyle(font: ttf),
+                            ),
+                          pw.SizedBox(height: 15),
                           pw.Text(
                             'Test',
                             style: pw.TextStyle(
-                              fontSize: 14,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                                font: ttf,
+                                fontSize: 18,
+                                fontWeight: pw.FontWeight.bold),
                           ),
-                          for (var test in testForm) pw.Text(test),
-                          pw.SizedBox(height: 10),
+                          for (var test in testForm)
+                            pw.Text(
+                              test,
+                              style: pw.TextStyle(font: ttf),
+                            ),
+                          pw.SizedBox(height: 15),
                           pw.Text(
                             'Advice',
                             style: pw.TextStyle(
-                              fontSize: 14,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                                font: ttf,
+                                fontSize: 18,
+                                fontWeight: pw.FontWeight.bold),
                           ),
                           pw.SizedBox(height: 8),
-                          pw.Text(advice),
+                          pw.Text(
+                            advice,
+                            style: pw.TextStyle(font: ttf),
+                          ),
                         ],
                       ),
                     ),
                     pw.VerticalDivider(
-                      width: 10,
-                      thickness: 1,
-                      color: PdfColors.black,
-                    ),
+                        width: 10, thickness: 1, color: PdfColors.black),
                     pw.Expanded(
                       flex: 4,
                       child: pw.Container(
                         height: 350,
                         color: PdfColors.white,
                         padding: const pw.EdgeInsets.all(8.0),
-                        child: pw.Text(prescription),
+                        child: pw.Text(
+                          prescription,
+                          style: pw.TextStyle(font: ttf),
+                        ),
                       ),
                     ),
                   ],
                 ),
                 pw.SizedBox(height: 20),
                 pw.Text(
-                  'Do not give any medicine to your pet without doctor advice. Must bring the previous prescription with you at the time of next visit. Animals eyes speak great language.',
+                  'Please do not give any medicine to your pet without doctor advice. It is imperative to bring the previous prescription during your next visit. Animals’ eyes speek great language.',
+                  style: pw.TextStyle(
+                    font: ttf,
+                    color: PdfColors.red,
+                  ),
                 ),
               ],
             );
