@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +39,10 @@ class _PrescriptionState extends State<Prescription> {
       TextEditingController();
   final TextEditingController _fluVaccineController = TextEditingController();
   final TextEditingController _dhppDogController = TextEditingController();
-  final TextEditingController _testFormController = TextEditingController();
+  // final TextEditingController _testFormController = TextEditingController();
+  final TextEditingController _rabiesController = TextEditingController();
+  final TextEditingController _fpvController = TextEditingController();
+  final TextEditingController _fipController = TextEditingController();
   final TextEditingController _adviceController = TextEditingController();
   final TextEditingController _prescriptionController = TextEditingController();
 
@@ -74,7 +78,7 @@ class _PrescriptionState extends State<Prescription> {
     _rabiesVaccineController.dispose();
     _fluVaccineController.dispose();
     _dhppDogController.dispose();
-    _testFormController.dispose();
+    // _testFormController.dispose();
     _adviceController.dispose();
     _prescriptionController.dispose();
     super.dispose();
@@ -137,7 +141,12 @@ class _PrescriptionState extends State<Prescription> {
         'DHPPL(DOG): ${_dhppDogController.text}',
       ];
 
-      final testForm = _testFormController.text;
+      // final testForm = _testFormController.text;
+      final testform = [
+        'Rabies: ${_rabiesController.text}',
+        'FPV: ${_fpvController.text}',
+        'FIP: ${_fipController.text}',
+      ];
       final advice = _adviceController.text;
       final prescription = _prescriptionController.text;
 
@@ -270,7 +279,9 @@ class _PrescriptionState extends State<Prescription> {
       await file.writeAsBytes(await pdf.save());
       await OpenFile.open(file.path);
     } catch (e) {
-      print('Error generating PDF: $e');
+      if (kDebugMode) {
+        print('Error generating PDF: $e');
+      }
     }
   }
 
@@ -877,6 +888,103 @@ class _PrescriptionState extends State<Prescription> {
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
                           _dhppDogController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Test',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _dewormingController,
+                    decoration: InputDecoration(
+                      labelText: 'Rabies',
+                      hintText: 'Result',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _rabiesController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _rabiesVaccineController,
+                    decoration: InputDecoration(
+                      labelText: 'FPV',
+                      hintText: 'Result',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _fpvController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _fluVaccineController,
+                    decoration: InputDecoration(
+                      labelText: 'FIP',
+                      hintText: 'Result',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[50],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 12.0),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _fipController.clear();
                         },
                       ),
                     ),
