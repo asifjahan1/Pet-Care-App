@@ -141,12 +141,12 @@ class _PrescriptionState extends State<Prescription> {
         'DHPPL(DOG): ${_dhppDogController.text}',
       ];
 
-      // final testForm = _testFormController.text;
-      final testform = [
+      final testForm = [
         'Rabies: ${_rabiesController.text}',
         'FPV: ${_fpvController.text}',
         'FIP: ${_fipController.text}',
       ];
+
       final advice = _adviceController.text;
       final prescription = _prescriptionController.text;
 
@@ -224,42 +224,54 @@ class _PrescriptionState extends State<Prescription> {
                           pw.Text(
                             'C/C',
                             style: pw.TextStyle(
-                                fontSize: 18, fontWeight: pw.FontWeight.bold),
+                              fontSize: 14,
+                              fontWeight: pw.FontWeight.bold,
+                            ),
                           ),
                           for (var cc in ccForm) pw.Text(cc),
+                          pw.SizedBox(height: 10),
+                          pw.Text(
+                            'C/H',
+                            style: pw.TextStyle(
+                              fontSize: 14,
+                              fontWeight: pw.FontWeight.bold,
+                            ),
+                          ),
+                          for (var ch in chForm) pw.Text(ch),
+                          pw.SizedBox(height: 10),
+                          pw.Text(
+                            'Test',
+                            style: pw.TextStyle(
+                              fontSize: 14,
+                              fontWeight: pw.FontWeight.bold,
+                            ),
+                          ),
+                          for (var test in testForm) pw.Text(test),
+                          pw.SizedBox(height: 10),
+                          pw.Text(
+                            'Advice',
+                            style: pw.TextStyle(
+                              fontSize: 14,
+                              fontWeight: pw.FontWeight.bold,
+                            ),
+                          ),
+                          pw.SizedBox(height: 8),
+                          pw.Text(advice),
                         ],
                       ),
                     ),
                     pw.VerticalDivider(
-                        width: 10, thickness: 1, color: PdfColors.black),
+                      width: 10,
+                      thickness: 1,
+                      color: PdfColors.black,
+                    ),
                     pw.Expanded(
                       flex: 4,
                       child: pw.Container(
-                        height: 200,
-                        color: PdfColors.grey50,
-                        child: pw.Padding(
-                          padding: const pw.EdgeInsets.all(8.0),
-                          child: pw.Text(prescription),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                pw.SizedBox(height: 20),
-                pw.Row(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Expanded(
-                      child: pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          pw.Text(
-                            'C/H',
-                            style: pw.TextStyle(
-                                fontSize: 18, fontWeight: pw.FontWeight.bold),
-                          ),
-                          for (var ch in chForm) pw.Text(ch),
-                        ],
+                        height: 350,
+                        color: PdfColors.white,
+                        padding: const pw.EdgeInsets.all(8.0),
+                        child: pw.Text(prescription),
                       ),
                     ),
                   ],
@@ -288,6 +300,7 @@ class _PrescriptionState extends State<Prescription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -506,7 +519,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -534,7 +547,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -560,7 +573,7 @@ class _PrescriptionState extends State<Prescription> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -588,7 +601,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -616,7 +629,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -644,7 +657,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -672,7 +685,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -700,7 +713,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -728,7 +741,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -756,7 +769,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -797,7 +810,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -825,7 +838,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -853,7 +866,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -868,7 +881,7 @@ class _PrescriptionState extends State<Prescription> {
                   TextField(
                     controller: _dhppDogController,
                     decoration: InputDecoration(
-                      labelText: 'DHPP(DOG)',
+                      labelText: 'DHPPL(Dog)',
                       hintText: '',
                       hintStyle: const TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
@@ -881,7 +894,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -907,7 +920,7 @@ class _PrescriptionState extends State<Prescription> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: _dewormingController,
+                    controller: _rabiesController,
                     decoration: InputDecoration(
                       labelText: 'Rabies',
                       hintText: 'Result',
@@ -922,7 +935,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -935,7 +948,7 @@ class _PrescriptionState extends State<Prescription> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: _rabiesVaccineController,
+                    controller: _fpvController,
                     decoration: InputDecoration(
                       labelText: 'FPV',
                       hintText: 'Result',
@@ -950,7 +963,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -963,7 +976,7 @@ class _PrescriptionState extends State<Prescription> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: _fluVaccineController,
+                    controller: _fipController,
                     decoration: InputDecoration(
                       labelText: 'FIP',
                       hintText: 'Result',
@@ -978,7 +991,7 @@ class _PrescriptionState extends State<Prescription> {
                             const BorderSide(color: Colors.blue, width: 2.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[50],
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 12.0),
                       suffixIcon: IconButton(
@@ -986,6 +999,43 @@ class _PrescriptionState extends State<Prescription> {
                         onPressed: () {
                           _fipController.clear();
                         },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Advice',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                          color: Colors.grey), // Border color and width
+                      borderRadius: BorderRadius.circular(
+                          12.0), // Optional: Border radius
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: _adviceController,
+                        maxLines: null,
+                        expands: true,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(8.0),
+                        ),
                       ),
                     ),
                   ),
