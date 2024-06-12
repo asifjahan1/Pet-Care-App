@@ -202,19 +202,21 @@ class _PrescriptionState extends State<Prescription> {
                 ),
                 pw.SizedBox(height: 20),
                 pw.Text('Date: $_date'),
-                pw.SizedBox(height: 20),
+                pw.SizedBox(height: 10),
                 pw.Divider(),
                 pw.Row(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Expanded(
+                      flex: 2,
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Text('C/C',
-                              style: pw.TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: pw.FontWeight.bold)),
+                          pw.Text(
+                            'C/C',
+                            style: pw.TextStyle(
+                                fontSize: 18, fontWeight: pw.FontWeight.bold),
+                          ),
                           for (var cc in ccForm) pw.Text(cc),
                         ],
                       ),
@@ -222,6 +224,7 @@ class _PrescriptionState extends State<Prescription> {
                     pw.VerticalDivider(
                         width: 10, thickness: 1, color: PdfColors.black),
                     pw.Expanded(
+                      flex: 4,
                       child: pw.Container(
                         height: 200,
                         color: PdfColors.grey50,
@@ -525,7 +528,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _anorexiaController.clear();
                         },
                       ),
                     ),
@@ -551,7 +554,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _commonColdController.clear();
                         },
                       ),
                     ),
@@ -579,7 +582,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _constipationController.clear();
                         },
                       ),
                     ),
@@ -607,7 +610,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _dehydrationController.clear();
                         },
                       ),
                     ),
@@ -635,7 +638,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _diarrheaController.clear();
                         },
                       ),
                     ),
@@ -663,7 +666,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _feverController.clear();
                         },
                       ),
                     ),
@@ -691,7 +694,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _pneumoniaController.clear();
                         },
                       ),
                     ),
@@ -719,7 +722,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _vomitingController.clear();
                         },
                       ),
                     ),
@@ -747,7 +750,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _othersController.clear();
                         },
                       ),
                     ),
@@ -788,7 +791,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _dewormingController.clear();
                         },
                       ),
                     ),
@@ -816,7 +819,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _rabiesVaccineController.clear();
                         },
                       ),
                     ),
@@ -844,7 +847,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _fluVaccineController.clear();
                         },
                       ),
                     ),
@@ -872,7 +875,7 @@ class _PrescriptionState extends State<Prescription> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear, color: Colors.grey),
                         onPressed: () {
-                          _alopeciaController.clear();
+                          _dhppDogController.clear();
                         },
                       ),
                     ),
