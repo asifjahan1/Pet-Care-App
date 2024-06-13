@@ -140,23 +140,36 @@ class _PrescriptionState extends State<Prescription> {
       final temp = _tempController.text;
 
       final ccForm = [
-        'Alopecia: ${_alopeciaController.text}',
-        'Anorexia: ${_anorexiaController.text}',
-        'Common Cold: ${_commonColdController.text}',
-        'Constipation: ${_constipationController.text}',
-        'Dehydration: ${_dehydrationController.text}',
-        'Diarrhea: ${_diarrheaController.text}',
-        'Fever: ${_feverController.text}',
-        'Pneumonia: ${_pneumoniaController.text}',
-        'Vomiting: ${_vomitingController.text}',
-        'Others: ${_othersController.text}',
+        if (_alopeciaController.text.isNotEmpty)
+          'Alopecia: ${_alopeciaController.text}',
+        if (_anorexiaController.text.isNotEmpty)
+          'Anorexia: ${_anorexiaController.text}',
+        if (_commonColdController.text.isNotEmpty)
+          'Common Cold: ${_commonColdController.text}',
+        if (_constipationController.text.isNotEmpty)
+          'Constipation: ${_constipationController.text}',
+        if (_dehydrationController.text.isNotEmpty)
+          'Dehydration: ${_dehydrationController.text}',
+        if (_diarrheaController.text.isNotEmpty)
+          'Diarrhea: ${_diarrheaController.text}',
+        if (_feverController.text.isNotEmpty) 'Fever: ${_feverController.text}',
+        if (_pneumoniaController.text.isNotEmpty)
+          'Pneumonia: ${_pneumoniaController.text}',
+        if (_vomitingController.text.isNotEmpty)
+          'Vomiting: ${_vomitingController.text}',
+        if (_othersController.text.isNotEmpty)
+          'Others: ${_othersController.text}',
       ];
 
       final chForm = [
-        'Deworming: ${_dewormingController.text}',
-        'Rabies Vaccine: ${_rabiesVaccineController.text}',
-        'Flu Vaccine: ${_fluVaccineController.text}',
-        'DHPPL(DOG): ${_dhppDogController.text}',
+        if (_dewormingController.text.isNotEmpty)
+          'Deworming: ${_dewormingController.text}',
+        if (_rabiesVaccineController.text.isNotEmpty)
+          'Rabies Vaccine: ${_rabiesVaccineController.text}',
+        if (_fluVaccineController.text.isNotEmpty)
+          'Flu Vaccine: ${_fluVaccineController.text}',
+        if (_dhppDogController.text.isNotEmpty)
+          'DHPPL(DOG): ${_dhppDogController.text}',
       ];
 
       final testForm = [
@@ -303,32 +316,35 @@ class _PrescriptionState extends State<Prescription> {
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Text(
-                            'C/C',
-                            style: pw.TextStyle(
-                                font: ttf,
-                                fontSize: 18,
-                                fontWeight: pw.FontWeight.bold),
-                          ),
+                          if (ccForm.isNotEmpty)
+                            pw.Text(
+                              'C/C',
+                              style: pw.TextStyle(
+                                  font: ttf,
+                                  fontSize: 18,
+                                  fontWeight: pw.FontWeight.bold),
+                            ),
                           for (var cc in ccForm)
                             pw.Text(
                               cc,
                               style: pw.TextStyle(font: ttf),
                             ),
-                          pw.SizedBox(height: 15),
-                          pw.Text(
-                            'C/H',
-                            style: pw.TextStyle(
-                                font: ttf,
-                                fontSize: 18,
-                                fontWeight: pw.FontWeight.bold),
-                          ),
+                          if (ccForm.isNotEmpty) pw.SizedBox(height: 15),
+                          if (chForm.isNotEmpty)
+                            pw.Text(
+                              'C/H',
+                              style: pw.TextStyle(
+                                  font: ttf,
+                                  fontSize: 18,
+                                  fontWeight: pw.FontWeight.bold),
+                            ),
                           for (var ch in chForm)
                             pw.Text(
                               ch,
                               style: pw.TextStyle(font: ttf),
                             ),
-                          pw.SizedBox(height: 15),
+                          if (chForm.isNotEmpty) pw.SizedBox(height: 15),
+                          // if (testForm.isNotEmpty)
                           pw.Text(
                             'Test',
                             style: pw.TextStyle(
