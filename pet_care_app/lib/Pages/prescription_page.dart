@@ -274,7 +274,6 @@ class _PrescriptionState extends State<Prescription> {
                     pw.SizedBox(width: 8),
                     pw.Expanded(
                       child: pw.Row(
-                        // mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                         children: [
                           pw.Text(
                             'Temp: $temp',
@@ -374,12 +373,15 @@ class _PrescriptionState extends State<Prescription> {
                     ),
                   ],
                 ),
-                pw.SizedBox(height: 20),
-                pw.Text(
-                  'Please do not give any medicine to your pet without doctor advice. It is imperative to bring the previous prescription during your next visit. Animals’ eyes speak great language.',
-                  style: pw.TextStyle(
-                    font: ttf,
-                    color: PdfColors.red,
+                pw.Spacer(), // This will push the below text to the bottom
+                pw.Center(
+                  child: pw.Text(
+                    'Please do not give any medicine to your pet without doctor advice. It is imperative to bring the previous prescription during your next visit. Animals’ eyes speak great language.',
+                    textAlign: pw.TextAlign.center,
+                    style: pw.TextStyle(
+                      font: ttf,
+                      color: PdfColors.red,
+                    ),
                   ),
                 ),
               ],
@@ -410,11 +412,30 @@ class _PrescriptionState extends State<Prescription> {
             children: [
               const SizedBox(height: 20),
               if (_imageData != null)
-                Image.memory(
-                  _imageData!,
-                  height: 80,
-                  width: 380,
-                  fit: BoxFit.cover,
+                LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    // Get the screen width using MediaQuery
+                    final double screenWidth =
+                        MediaQuery.of(context).size.width;
+
+                    // Set the image width based on the screen size
+                    final double imageWidth =
+                        screenWidth * 0.9; // 90% of screen width
+
+                    return Center(
+                      child: SizedBox(
+                        width: imageWidth,
+                        child: AspectRatio(
+                          aspectRatio: 380 /
+                              80, // Original aspect ratio (width / height)
+                          child: Image.memory(
+                            _imageData!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               const SizedBox(height: 20),
               Row(
@@ -632,7 +653,8 @@ class _PrescriptionState extends State<Prescription> {
                       controller: _tempController,
                       onChanged: (value) {
                         // No need to convert temperature, just append '*F' to the value
-                        _tempController.text = '';
+                        // ignore: unnecessary_string_interpolations
+                        _tempController.text = '$value';
                       },
                       decoration: InputDecoration(
                         labelText: 'Temp',
